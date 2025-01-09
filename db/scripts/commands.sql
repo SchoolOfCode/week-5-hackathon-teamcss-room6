@@ -1,23 +1,11 @@
-// TICKET 5
-// Serves the purpose of resetting and seeding the database with dummy data for initial testing
-// Not following convention from the workshop of quering requests directly to the database with SQL commands
-// Instead, creating a seperate commands.sql file that holds the SQL commands, and reading them using the fs package, storing them as a variable, and passing the commands as an argument to the DB query
-
-// Couldnt resolve file path so went back to original. Mention it at mentor meeting
-import { pool } from "../dbConnect.js";
-
-async function resetDatabase() {
-  try {
-    // Drop existing tables if they exist
-    await pool.query(`
+/* 
       DROP TABLE IF EXISTS users CASCADE;
       DROP TABLE IF EXISTS entries CASCADE;
       DROP TABLE IF EXISTS authors CASCADE;
       DROP TABLE IF EXISTS books CASCADE;
-    `);
+    
 
-    // Create the user table
-    await pool.query(`
+
       CREATE TABLE users (
         user_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         first_name VARCHAR(255) NOT NULL,
@@ -26,10 +14,9 @@ async function resetDatabase() {
         password VARCHAR(225) NOT NULL,
         date_joined DATE NOT NULL
       );
-    `);
+    
 
-    // Create the books table with a foreign key to the authors table
-    await pool.query(`
+
       CREATE TABLE entries (
         entry_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         user_id INTEGER REFERENCES users(user_id),
@@ -38,10 +25,9 @@ async function resetDatabase() {
         time_added TIMESTAMP NOT NULL
         
       );
-    `);
 
-    // Seed the user table
-    await pool.query(`
+
+
   INSERT INTO users (first_name, last_name, email, password, date_joined)
   VALUES 
     ('Emma', 'Johnson', 'emma.johnson@example.com', 'P@ssword123', '2024-03-15'),
@@ -49,10 +35,9 @@ async function resetDatabase() {
     ('Olivia', 'Davis', 'olivia.davis@example.com', 'Ol!v1a2023$', '2023-12-10'),
     ('Noah', 'Garcia', 'noah.garcia@example.com', 'N0ah@G1234', '2024-09-05'),
     ('Sophia', 'Martinez', 'sophia.martinez@example.com', 'Soph!@2023', '2024-01-02')
-`);
 
-    // Seed the entries table
-    await pool.query(`
+
+
   INSERT INTO entries (user_id, journal_entry, date_added, time_added)
   VALUES 
   (1, 'Started a new project at work today, feeling excited!', '2024-03-15', '2024-03-15 10:30:45'),
@@ -70,15 +55,5 @@ async function resetDatabase() {
   (5, 'Started learning a new language – very rewarding!', '2024-01-02', '2024-01-02 10:00:00'),
   (5, 'Tried yoga for the first time – surprisingly relaxing.', '2024-01-03', '2024-01-03 08:20:00'),
   (5, 'Wrote in my journal about plans for the year.', '2024-01-04', '2024-01-04 21:00:30')
-`);
 
-    console.log("Database reset successful");
-  } catch (error) {
-    console.error("Database reset failed: ", error);
-  } finally {
-    // End the pool
-    await pool.end();
-  }
-}
-
-await resetDatabase();
+ */
