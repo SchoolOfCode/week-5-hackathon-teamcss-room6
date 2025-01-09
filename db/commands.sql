@@ -21,7 +21,7 @@
         entry_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         user_id INTEGER REFERENCES users(user_id),
         journal_entry VARCHAR(5000) NOT NULL,
-        date_added DATE NOT NULL,
+           DATE NOT NULL,
         time_added TIMESTAMP NOT NULL
         
       );
