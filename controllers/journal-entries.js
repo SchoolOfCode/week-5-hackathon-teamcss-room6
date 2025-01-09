@@ -45,6 +45,41 @@ export async function getEntryById(req, res) {
 
 export async function postEntry(req, res) {
   try {
+    // Sumeya's function takes 4 paramteres originally
+    // Removed one parameter (entry ID) as it is auto generated in the SQL table
+    // Last 3 parameters are user_id, journal_entry, time_added
+
+    //user_id
+    let userId = parseInt(req.params.id); // placeholder for now, as we need to rethink how we are adding this in the database. Hard coding IDs in sql commands, so no way to increment this. Maybe this is okay for now and we just have a req parameter in the endpoint?
+
+    // Journal_entry nice and easy
+    let newEntry = req.body;
+
+    // time_added
+    // Shoutout to snir on stackoverflow 2015
+    // this is giving errors as it retuns hours:mins:seconds
+    // SQL wants format of year:month:days hours:mins:seconds
+    let currentTime = new Date().toLocaleTimeString();
+
+    let date = new Date();
+    let correctDateFormat =
+      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+
+    let correctFormat = correctDateFormat + " " + currentTime;
+
+    console.log(correctDateFormat);
+
+    const postNewEntry = await insertEntry(
+      userId,
+      newEntry,
+      "2025-02-03",
+      correctFormat
+    );
+
+    res.status(201).json({
+      status: "success",
+      data: postNewEntry,
+    });
   } catch (error) {
     res.status(500).json({
       status: "error",

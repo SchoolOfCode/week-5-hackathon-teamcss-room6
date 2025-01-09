@@ -21,7 +21,7 @@
         entry_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         user_id INTEGER REFERENCES users(user_id),
         journal_entry VARCHAR(5000) NOT NULL,
-           DATE NOT NULL,
+        entry_date DATE NOT NULL,
         time_added TIMESTAMP NOT NULL
         
       );
@@ -38,7 +38,7 @@
 
 
 
-  INSERT INTO entries (user_id, journal_entry, date_added, time_added)
+  INSERT INTO entries (user_id, journal_entry, entry_date, time_added)
   VALUES 
   (1, 'Started a new project at work today, feeling excited!', '2024-03-15', '2024-03-15 10:30:45'),
   (1, 'Had a productive meeting with the team.', '2024-03-16', '2024-03-16 14:20:10'),  
@@ -54,5 +54,5 @@
   (4, 'Watched a documentary on space exploration.', '2024-09-07', '2024-09-07 21:15:10'),
   (5, 'Started learning a new language – very rewarding!', '2024-01-02', '2024-01-02 10:00:00'),
   (5, 'Tried yoga for the first time – surprisingly relaxing.', '2024-01-03', '2024-01-03 08:20:00'),
-  (5, 'Wrote in my journal about plans for the year.', '2024-01-04', '2024-01-04 21:00:30')
+  (5, 'test', '2024-01-04', '2024-01-04 21:00:30')
 
