@@ -1,19 +1,21 @@
 import express from "express";
 
 import {
-  getUsers,
+  getAllUsers,
   getUserById,
-  createUser,
-  updateUserById,
-  deleteUserById,
+  postUser,
+  updateUserInfoById,
+  updateUserPasswordById,
+  /*  deleteUserByUserId,  */
 } from "../controllers/users.js";
 
 const router = express.Router();
 
-router.get("/", getUsers);
+router.get("/", getAllUsers);
 router.get("/:id", getUserById);
-router.post("/", createUser);
-router.patch("/:id", updateUserById);
-router.delete("/:id", deleteUserById);
+router.post("/", postUser);
+router.patch("/:id", updateUserInfoById);
+router.patch("/:id", updateUserPasswordById);
+/* router.delete("/:id", deleteUserByUserId); */
 
 export default router;
