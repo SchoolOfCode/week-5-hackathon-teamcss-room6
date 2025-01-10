@@ -35,15 +35,10 @@ export async function insertEntry(userId, journalEntry, timeAdded) {
 }
 
 // only edits entry by entry id not user id
-export async function editByEntryId(
-  entryId,
-  journalEntry,
-  dateAdded,
-  timeAdded
-) {
+export async function editByEntryId(entryId, journalEntry, timeAdded) {
   const editedEntry = await pool.query(
-    "UPDATE entries SET journal_entry = $1, date_added = $2, time_added = $3 WHERE entry_id = $4 RETURNING *",
-    [journalEntry, dateAdded, timeAdded, entryId]
+    "UPDATE entries SET journal_entry = $1, time_added = $2 WHERE entry_id = $3 RETURNING *",
+    [journalEntry, timeAdded, entryId]
   );
   return editedEntry.rows; // added rows to all returns by serge
 }

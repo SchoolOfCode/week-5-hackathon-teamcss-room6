@@ -44,6 +44,8 @@ export async function getEntryById(req, res) {
 }
 
 export async function postEntry(req, res) {
+  // kind of works but format of entries is awkward
+  // Also unable to create a new entry for an unregistered user, which makes sense
   try {
     // Sumeya's function takes 4 paramteres originally
     // Removed one parameter (entry ID) as it is auto generated in the SQL table
@@ -67,18 +69,68 @@ export async function postEntry(req, res) {
 
     let correctFormat = correctDateFormat + " " + currentTime;
 
-    console.log(correctDateFormat);
-
-    const postNewEntry = await insertEntry(
-      userId,
-      newEntry,
-      "2025-02-03",
-      correctFormat
-    );
+    const postNewEntry = await insertEntry(userId, newEntry, correctFormat);
 
     res.status(201).json({
       status: "success",
       data: postNewEntry,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+}
+
+export async function updateEntryById(req, res) {
+  try {
+    // Sumeya's function takes 3 parameters
+
+    let updatedEntry = req.body; // Formatting will be awkward again, so fix here and in post
+
+    // Time added same as above
+    let currentTime = new Date().toLocaleTimeString();
+
+    let date = new Date();
+    let correctDateFormat =
+      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+
+    let correctFormat = correctDateFormat + " " + currentTime;
+
+    // entry_id can simply be the req.param
+    let entryToUpdate = req.params.id;
+
+    console.log(correctFormat);
+
+    // I was getting errors because of correctFormat being M D rather than MM DD, then they just dissappeared and now it works?
+    let patchEntry = await editByEntryId(
+      entryToUpdate,
+      updatedEntry,
+      correctFormat
+    );
+
+    res.status(200).json({
+      status: "success",
+      data: patchEntry,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+}
+
+export async function deleteEntryById(req, res) {
+  try {
+    const entryId = req.params.id;
+
+    let deletedEntry = await removeByEntryId(entryId);
+
+    res.status(200).json({
+      status: "success",
+      data: deletedEntry,
     });
   } catch (error) {
     res.status(500).json({
