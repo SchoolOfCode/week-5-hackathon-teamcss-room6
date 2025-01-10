@@ -1,18 +1,17 @@
 import express from "express";
 
-import { getEntries,
+import { getAllEntries,
         getEntryById,
-        createEntry,
+        postEntry,
         updateEntryById,
         deleteEntryById
-
 } from "../controllers/journal-entries.js";
 
 const router = express.Router();
 
-router.get("/", getEntries); 
+router.get("/", getAllEntries); 
 router.get("/:id", getEntryById);
-router.post("/", createEntry);
+router.post("/:id", postEntry);
 router.patch("/:id", updateEntryById);
 router.delete("/:id", deleteEntryById);
 

@@ -26,6 +26,7 @@ export async function fetchEntryByUserId(userId) {
   return userEntries.rows;
 }
 
+//  inserts new entry using UserId
 export async function insertEntry(userId, journalEntry, timeAdded) {
   const addedEntry = await pool.query(
     "INSERT INTO entries (user_id, journal_entry, time_added) VALUES ($1, $2, $3) RETURNING *",

@@ -3,6 +3,7 @@ import express from "express";
 import morgan from "morgan";
 
 import entries from "./routes/journal-entries.js";
+// import users from "./routes/users.js";
 
 // Initialize the express app
 const app = express();
@@ -12,6 +13,7 @@ app.use(morgan("dev")); // Morgan is used for logging HTTP requests to the conso
 app.use(express.json()); // express.json() middleware is used to parse incoming JSON requests
 
 // Add sub-routers
-app.use("/", entries);
+app.use("/entries", entries);
+// app.use("/", users);
 
 export default app;
