@@ -14,42 +14,42 @@ import { pool } from "../db/dbConnect.js";
     - encrypt entries on database for user privacy
 */
 export async function fetchAllEntries() {
-    const entries = await pool.query("SELECT * FROM entries");
-    return entries;
+  const entries = await pool.query("SELECT * FROM entries");
+  return entries.rows;
 }
 
 export async function fetchEntryByUserId(userId) {
-    const userEntries = await pool.query(
-        "SELECT * FROM entries WHERE user_id = $1",
-        [userId]
-    );
-    return userEntries;
+  const userEntries = await pool.query(
+    "SELECT * FROM entries WHERE user_id = $1",
+    [userId]
+  );
+  return userEntries.rows;
 }
 
-export async function insertEntry(entryId, userId, journalEntry, timeAdded) {
-    const addedEntry = await pool.query(
-        "INSERT INTO entries (entry_id, user_id, journal_entry, time_added) VALUES ($1, $2, $3, $4) RETURNING *",
-        [entryId, userId, journalEntry, timeAdded]
-    );
-    return addedEntry;
+export async function insertEntry(userId, journalEntry, timeAdded) {
+  const addedEntry = await pool.query(
+    "INSERT INTO entries (user_id, journal_entry, time_added) VALUES ($1, $2, $3) RETURNING *",
+    [userId, journalEntry, timeAdded]
+  );
+  return addedEntry.rows;
 }
 
 // only edits entry by entry id not user id
 export async function editByEntryId(entryId, journalEntry, timeAdded) {
-    const editedEntry = await pool.query(
-        "UPDATE entries SET journal_entry = $1, time_added = $2 WHERE entry_id = $3 RETURNING *",
-        [journalEntry, timeAdded, entryId]
-    );
-    return editedEntry;
+  const editedEntry = await pool.query(
+    "UPDATE entries SET journal_entry = $1, time_added = $2 WHERE entry_id = $3 RETURNING *",
+    [journalEntry, timeAdded, entryId]
+  );
+  return editedEntry.rows; // added rows to all returns by serge
 }
 
 // removes by entry id not user id
 export async function removeByEntryId(entryId) {
-    const removedEntry = await pool.query(
-        "DELETE FROM entries WHERE entry_id = $1 RETURNING *",
-        [entryId]
-    );
-    return removedEntry;
+  const removedEntry = await pool.query(
+    "DELETE FROM entries WHERE entry_id = $1 RETURNING *",
+    [entryId]
+  );
+  return removedEntry.rows;
 }
 
 //   entry_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -57,4 +57,3 @@ export async function removeByEntryId(entryId) {
 //   journal_entry VARCHAR(5000) NOT NULL,
 //      DATE NOT NULL,
 //   time_added TIMESTAMP NOT NULL
-  

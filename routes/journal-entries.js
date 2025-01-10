@@ -5,6 +5,7 @@ import { getEntries,
         createEntry,
         updateEntryById,
         deleteEntryById
+
 } from "../controllers/journal-entries.js";
 
 const router = express.Router();
