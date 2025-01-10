@@ -143,3 +143,21 @@ export async function updateUserPasswordById(req, res) {
     });
   }
 }
+
+export async function deleteUserById(req, res) {
+  try {
+    const userId = req.params.id;
+
+    let deletedUser = await deleteUserByUserId(userId);
+
+    res.status(200).json({
+      status: "success",
+      data: deletedUser,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+}

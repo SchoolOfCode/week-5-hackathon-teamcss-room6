@@ -6,7 +6,7 @@ import {
   postUser,
   updateUserInfoById,
   updateUserPasswordById,
-  /*  deleteUserByUserId,  */
+  deleteUserByUserId,
 } from "../controllers/users.js";
 
 const router = express.Router();
@@ -16,6 +16,6 @@ router.get("/:id", getUserById);
 router.post("/", postUser);
 router.patch("/:id", updateUserInfoById);
 router.patch("/:id", updateUserPasswordById);
-/* router.delete("/:id", deleteUserByUserId); */
+router.delete("/:id", deleteUserByUserId);
 
 export default router;
