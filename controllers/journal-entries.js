@@ -72,6 +72,8 @@ export async function postEntry(req, res) {
       date.getDate();
 
     let correctFormat = correctDateFormat + " " + currentTime;
+    console.log(correctFormat);
+    // select convert(varchar, getdate(), 20)
 
     const postNewEntry = await insertEntry(userId, newEntry, correctFormat);
 
