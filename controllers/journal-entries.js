@@ -65,7 +65,11 @@ export async function postEntry(req, res) {
 
     let date = new Date();
     let correctDateFormat =
-      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+      date.getFullYear() +
+      "-" +
+      (date.getMonth() + 1).toString().padStart(2, "0") +
+      "-" +
+      date.getDate();
 
     let correctFormat = correctDateFormat + " " + currentTime;
 
