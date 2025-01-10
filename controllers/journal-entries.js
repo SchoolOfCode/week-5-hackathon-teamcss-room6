@@ -55,7 +55,7 @@ export async function postEntry(req, res) {
     let userId = parseInt(req.params.id); // placeholder for now, as we need to rethink how we are adding this in the database. Hard coding IDs in sql commands, so no way to increment this. Maybe this is okay for now and we just have a req parameter in the endpoint?
 
     // Journal_entry nice and easy
-    let newEntry = req.body;
+    let newEntry = req.body.journalEntry;
 
     // time_added
     // Shoutout to snir on stackoverflow 2015
@@ -93,14 +93,18 @@ export async function updateEntryById(req, res) {
   try {
     // Sumeya's function takes 3 parameters
 
-    let updatedEntry = req.body; // Formatting will be awkward again, so fix here and in post
+    let updatedEntry = req.body.updateEntry; // Formatting will be awkward again, so fix here and in post
 
     // Time added same as above
     let currentTime = new Date().toLocaleTimeString();
 
     let date = new Date();
     let correctDateFormat =
-      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+      date.getFullYear() +
+      "-" +
+      (date.getMonth() + 1).toString().padStart(2, "0") +
+      "-" +
+      date.getDate();
 
     let correctFormat = correctDateFormat + " " + currentTime;
 
